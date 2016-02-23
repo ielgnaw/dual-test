@@ -5,6 +5,8 @@
 
 define(function (require) {
 
+    var DATA = require('./data');
+
     var $ = require('jquery');
 
     var WHITESPACE = /^[\s\xa0\u3000]+|[\u3000\xa0\s]+$/g;
@@ -37,7 +39,7 @@ define(function (require) {
 
         var answerNode = document.querySelector('#answer');
         var answer = trim(answerNode.value);
-        alert(answer);
+        socket.emit('mobileAnwser', {answer: answer});
     }
 
     var exports = {};
@@ -52,41 +54,16 @@ define(function (require) {
         // 监听 mobile 页面生成答题文本框
         socket.on('createAnswer', function (data) {
             document.querySelector('.container').innerHTML = ''
-                + '请输入答案：<input type="text" id="answer"/><a id="go" href="###">确定</a>';
+                + '请输入题目<b>'
+                +   data.curQuestion[0]
+                + '</b>的答案：<input type="text" id="answer"/><a id="go" href="###">确定</a>';
+
             document.querySelector('#go').addEventListener('click', doAnswer);
         });
 
-        // window.onbeforeunload = function() {
-        //     var n = window.event.screenX - window.screenLeft;
-        //     var b = n > document.documentElement.scrollWidth-20;
-        //     if(b && window.event.clientY < 0 || window.event.altKey){
-        //         // alert("这是一个关闭操作而非刷新");
-        //         // window.event.returnValue = ""; //此处放你想要操作的代码
-        //         return 'aaa';
-        //     }else{
-        //         // alert("这是一个刷新操作而非关闭");
-        //         return 'bbb';
-        //     }
-        // }
-
-        window.onunload = function () {
-            alert(123);
-        };
-        // window.addEventListener('unload',function () {
-        //     alert(33);
-        //     var n = window.event.screenX - window.screenLeft;
-        //     var b = n > document.documentElement.scrollWidth-20;
-        //     if(b && window.event.clientY < 0 || window.event.altKey){
-        //          alert("这是一个关闭操作而非刷新");
-        //          //此处放你想要操作的代码
-        //     }else{
-        //          alert("这是一个刷新操作而非关闭");
-        //     }
-        // })
-        // console.warn($);
-        // $(window).unload(function(){
-        //   alert("Goodbye!");
-        // });
+        socket.on('tell2MobileAllRight', function (data) {
+            document.querySelector('.container').innerHTML = '恭喜你，全都正确～';
+        });
     };
 
     return exports;

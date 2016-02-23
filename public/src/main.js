@@ -28,10 +28,10 @@ define(function (require) {
             });
 
             var socket = io.connect(location.origin);
-            socket.on('wocao', function (data) {
-                console.log(data);
-                // socket.emit('wocaonidaye', { n: 'nnn' });
-            });
+            // socket.on('wocao', function (data) {
+            //     console.log(data);
+            //     // socket.emit('wocaonidaye', { n: 'nnn' });
+            // });
             socket.on('jump', function (data) {
                 window.location.href = data.url;
                 // socket.emit('wocaonidaye', { n: 'nnn' });

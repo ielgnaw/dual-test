@@ -10,9 +10,6 @@ define(function (require) {
          * 启动
          */
         start: function () {
-            console.warn(globalData);
-            console.warn('main.js start');
-            console.warn(NAV);
             var $ = require('jquery');
 
             $('#ajax').on('click', function () {

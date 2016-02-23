@@ -8,6 +8,8 @@ var edp = require('edp-core');
 var path = require('path');
 var fs = require('fs');
 
+var PORT = 8000;
+
 /**
  * 机器 ip
  *
@@ -59,17 +61,22 @@ function startWebSocketServer(httpServer) {
             console.log(data);
         });
 
-        // 监听到手机端扫码进入页面
+        // 监听 mobile 扫码进入页面
         socket.on('mobileEnter', function (data) {
-            console.warn(data);
-            socket.broadcast.emit('jump', {url: 'http://www.qq.com'});
+            // 触发 PC 页面跳转到 question.html
+            socket.broadcast.emit('jump', {url: 'http://' + ip + ':' + PORT + '/question.html'});
         });
+
+        // 监听到 PC 端扫码进入 question 页面
+        socket.on('questionEnter', function (data) {
+            // 触发 mobile 页面生成答题文本框
+            socket.broadcast.emit('createAnswer');
+        });
+
         // console.warn(socket.broadcast, 1111);
         // socket.on('disconnect', function(){
         //     console.warn('over');
         // });
-
-
 
         // 广播信息给除当前用户之外的用户
         // socket.broadcast.emit('user connected');
@@ -109,4 +116,4 @@ function start(port) {
     edp.log.info('To stop, Press Ctrl+C');
 }
 
-start(8000);
+start(PORT);

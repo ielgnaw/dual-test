@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="stylesheet" href="src/css/index.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="dep/esl/esl.js"></script>
+        <script src="dep/qrcode/qrcode.js"></script>
+    </head>
+    <body>
+        <!-- <button id="ajax">ajax</button> -->
+        <div class="wrapper">
+            <div class="container">
+                <div>请用手机扫描二维码</div>
+                <div id="qrcode"></div>
+            </div>
+        </div>
+        <script src="/nav.js"></script>
+        <script src="/test.js"></script>
+        <script src="/require.config.js"></script>
+        <script>
+
+            var globalData = (function () {
+                var supportTouch =
+                    ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch;
+
+                var gData = {
+                    touchStartEvent: (supportTouch ? 'touchstart' : 'mousedown'),
+                    touchMoveEvent: (supportTouch ? 'touchmove' : 'mousemove'),
+                    touchEndEvent: (supportTouch ? 'touchend' : 'mouseup')
+                };
+
+                gData.width = document.documentElement.clientWidth;
+                gData.height = document.documentElement.clientHeight;
+                document.querySelector('.wrapper').style.height = gData.height + 'px';
+
+                var qrcode = new QRCode(document.getElementById('qrcode'), {
+                    text: location.origin + '/' + 'mobile.html?' + new Date().getTime(),
+                    width: 256,
+                    height: 256,
+                    colorDark : '#000000',
+                    colorLight : '#ffffff',
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+
+                setTimeout(function () {
+                    // qrcode.clear(); // clear the code.
+                    // qrcode.makeCode('http://qq.com'); // make another code.
+                }, 5000);
+
+                return gData;
+            })();
+
+            require(['main'], function (main) {
+                main.start();
+            });
+        </script>
+    </body>
+</html>

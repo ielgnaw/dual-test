@@ -1,0 +1,21 @@
+{
+  "name": "dual-test",
+  "description": "dual monitors example",
+  "version": "0.0.1-beta.1",
+  "contributors": [
+    {
+      "name": "ielgnaw",
+      "email": "wuji0223@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "body-parser": "1.10.x",
+    "edp-core": "~1.0.28",
+    "ejs": "^2.3.1",
+    "express": "4.x",
+    "js-yaml": "3.1.x",
+    "socket.io": "1.2.x"
+  },
+  "main": "server.js",
+  "repository": "https://github.com/ielgnaw/dual-test.git"
+}
